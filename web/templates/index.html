@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator - Harsh Chauhan</title>
+    <script>
+        async function calculate() {
+            let expression = document.getElementById("expression").value;
+            let response = await fetch("/calculate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ expression: expression })
+            });
+            let result = await response.json();
+            document.getElementById("result").innerText = "Result: " + (result.result || result.error);
+        }
+
+        async function loadHistory() {
+            let response = await fetch("/history");
+            let history = await response.json();
+            let historyDiv = document.getElementById("history");
+            historyDiv.innerHTML = "<h3>Calculation History:</h3>";
+            history.forEach(row => {
+                historyDiv.innerHTML += `<p>${row[0]} = ${row[1]}</p>`;
+            });
+        }
+    </script>
+</head>
+<body onload="loadHistory()">
+    <h2>Harsh Chauhan</h2>
+    <h2>2022BCD0044</h2>
+    <h3>Calculator</h3>
+    <input type="text" id="expression" placeholder="Enter expression (e.g., 5+3*2)">
+    <button onclick="calculate()">Calculate</button>
+    <p id="result"></p>
+    <div id="history"></div>
+</body>
+</html>

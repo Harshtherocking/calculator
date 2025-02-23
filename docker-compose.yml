@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    container_name: 2022BCD0044-web
+    ports:
+      - "8080:8081"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  worker:
+    build: ./worker
+    container_name: 2022BCD0044-worker
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  db:
+    image: postgres:latest
+    container_name: 2022BCD0044-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    container_name: 2022BCD0044-redis
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
