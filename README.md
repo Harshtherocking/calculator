@@ -38,8 +38,8 @@ microservices-app/
 ## 🚀 Setup Instructions
 ### 1️⃣ Clone the Repository
 ```sh
-git clone <your-repo-url>
-cd microservices-app
+git clone https://github.com/Harshtherocking/calculator.git
+cd calculator
 ```
 
 ### 2️⃣ Build and Start Services
